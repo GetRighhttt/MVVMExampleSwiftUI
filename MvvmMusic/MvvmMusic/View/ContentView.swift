@@ -9,25 +9,76 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @ObservedObject var viewModel: SongListViewModel
+    
     var body: some View {
         
         NavigationView {
             VStack() {
                 SearchBar()
-                EmptyStateView()
+                if viewModel.songs.isEmpty {
+                    EmptyStateView()
+                } else {
+                    List(viewModel.songs) { song in
+                        SongView(song: song)
+                    }
+                    .listStyle(PlainListStyle())
+                }
             }
             .navigationTitle("Music Search")
+            .background(Color("Pale"))
         }
     }
 }
 
+/*
+ Reusable view declarations
+ */
+
+struct SongView: View {
+    @ObservedObject var song: SongViewModel
+    
+    var body: some View {
+        HStack {
+            ArtWorkView(image: song.artwork)
+                .padding(.trailing)
+            VStack {
+                Text(song.trackName)
+                Text(song.artistName)
+                    .font(.footnote)
+                    .foregroundColor(Color("Gold"))
+            }
+        }
+        .padding()
+    }
+}
+
+struct ArtWorkView: View {
+    let image: Image?
+    
+    var body: some View {
+        ZStack {
+            if image != nil {
+                image
+            } else {
+                Color("Gold")
+                Image(systemName: "music.quarternote.3")
+                    .font(.largeTitle)
+                    .foregroundColor(Color("LightGreen"))
+            }
+        }
+        .frame(width: 50, height: 50)
+        .shadow(radius: 5)
+        .padding(.trailing, 5)
+    }
+}
 struct EmptyStateView: View {
     var body: some View {
         
-        let thisBackground = LinearGradient(colors: [Color("Pale"), .white], startPoint: .center, endPoint: .topTrailing)
+//        let thisBackground = LinearGradient(colors: [Color("Pale"), .white], startPoint: .center, endPoint: .topTrailing)
         
         ZStack {
-            thisBackground.ignoresSafeArea() // best approach for setting a bg
+            Color("Pale").ignoresSafeArea() // best approach for setting a bg
             VStack {
                 Spacer()
                 
@@ -41,7 +92,7 @@ struct EmptyStateView: View {
                 Spacer()
             }
             .padding()
-            .foregroundColor(Color("DarkGreen"))
+            .foregroundColor(Color("LightGreen"))
         }
     }
 }
@@ -81,6 +132,6 @@ struct SearchBar: UIViewRepresentable {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: SongListViewModel())
     }
 }

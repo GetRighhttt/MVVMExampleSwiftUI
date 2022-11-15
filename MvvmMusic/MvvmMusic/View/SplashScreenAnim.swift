@@ -15,7 +15,7 @@ struct SplashScreenAnim: View {
     var body: some View {
         ZStack {
             
-            ContentView()
+            ContentView(viewModel: SongListViewModel())
             
             ZStack {
                 Color("DarkGreen")
@@ -36,7 +36,7 @@ struct SplashScreenAnim: View {
     }
     
     func animateSplash() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
             
             withAnimation(Animation.easeOut(duration: 0.55)) {
                 animate.toggle()

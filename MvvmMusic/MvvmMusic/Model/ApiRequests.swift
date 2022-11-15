@@ -19,7 +19,17 @@ class DataModel {
             return
         }
         
-        
+        dataTask = URLSession.shared.dataTask(with: url) {data, _, _ in
+            guard let data = data else {
+                completion([])
+                return
+            }
+            
+            if let songResponse = try? JSONDecoder().decode(SongResponseModel.self, from: data) {
+                completion(songResponse.songs)
+            }
+        }
+        dataTask?.resume()
     }
     
     /*
@@ -40,5 +50,4 @@ class DataModel {
         
         return components?.url
     }
-    
 }
