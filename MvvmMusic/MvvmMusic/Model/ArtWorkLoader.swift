@@ -1,0 +1,36 @@
+//
+//  ArtWorkLoader.swift
+//  MvvmMusic
+//
+//  Created by Stefan Bayne on 11/15/22.
+//
+
+import Foundation
+import SwiftUI
+
+class ArtWorkLoader {
+    private var dataTasks: [URLSessionDataTask] = []
+    
+    func loadArtWork(forSong song: SongModel, completion: @escaping((Image?) -> Void)) {
+        guard let imageUrl = URL(string: song.artworkUrl) else {
+            completion(nil)
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
+            guard let data = data, let artwork = UIImage(data: data) else {
+                completion(nil)
+                return
+            }
+            
+            let image = Image(uiImage: artwork)
+            completion(image)
+        }
+        dataTasks.append(dataTask)
+        dataTask.resume()
+    }
+    
+    func reset() {
+        dataTasks.forEach { $0.cancel() }
+    }
+}

@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/*
+ Main View!
+ */
 struct ContentView: View {
     
     @ObservedObject var viewModel: SongListViewModel
@@ -14,27 +17,32 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
-            VStack() {
-                SearchBar()
+            VStack {
+                SearchBar(searchTerm: $viewModel.searchTerm)
                 if viewModel.songs.isEmpty {
                     EmptyStateView()
                 } else {
                     List(viewModel.songs) { song in
                         SongView(song: song)
+                            .listRowBackground(Color("Pale"))
                     }
-                    .listStyle(PlainListStyle())
+                    .listStyle(InsetListStyle())
                 }
             }
-            .navigationTitle("Music Search")
+            .navigationTitle("Apple Music")
             .background(Color("Pale"))
         }
     }
 }
 
 /*
- Reusable view declarations
+ Reusable view declarations!!!
  */
 
+
+/*
+ This view is for the songs!!
+ */
 struct SongView: View {
     @ObservedObject var song: SongViewModel
     
@@ -42,17 +50,22 @@ struct SongView: View {
         HStack {
             ArtWorkView(image: song.artwork)
                 .padding(.trailing)
-            VStack {
+            VStack(alignment: .leading) {
                 Text(song.trackName)
+                    .font(.headline)
+                    .foregroundColor(Color("DarkGold"))
                 Text(song.artistName)
-                    .font(.footnote)
-                    .foregroundColor(Color("Gold"))
+                    .font(.subheadline)
+                    .foregroundColor(Color("LightGreen"))
             }
         }
         .padding()
     }
 }
 
+/*
+ This view displays the artwork.
+ */
 struct ArtWorkView: View {
     let image: Image?
     
@@ -72,10 +85,14 @@ struct ArtWorkView: View {
         .padding(.trailing, 5)
     }
 }
+
+/*
+ When the list is empty, this view appears.
+ */
 struct EmptyStateView: View {
     var body: some View {
         
-//        let thisBackground = LinearGradient(colors: [Color("Pale"), .white], startPoint: .center, endPoint: .topTrailing)
+        //        let thisBackground = LinearGradient(colors: [Color("Pale"), .white], startPoint: .center, endPoint: .topTrailing)
         
         ZStack {
             Color("Pale").ignoresSafeArea() // best approach for setting a bg
@@ -104,6 +121,8 @@ struct EmptyStateView: View {
 struct SearchBar: UIViewRepresentable {
     typealias UIViewType = UISearchBar
     
+    @Binding var searchTerm: String
+    
     // creates the searchbar
     func makeUIView(context: Context) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
@@ -120,12 +139,20 @@ struct SearchBar: UIViewRepresentable {
     
     // creates delegate for searchbar
     func makeCoordinator() -> SearchBarCoordinator {
-        return SearchBarCoordinator()
+        return SearchBarCoordinator(searchTerm: $searchTerm)
     }
     
     // type coordinator method will return
     class SearchBarCoordinator: NSObject, UISearchBarDelegate {
-        // TODO
+        @Binding var searchTerm: String
+        
+        init(searchTerm: Binding<String>) {
+            self._searchTerm = searchTerm
+        }
+        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            searchTerm = searchBar.text ?? ""
+            UIApplication.shared.windows.first { $0.isKeyWindow}?.endEditing(true)
+        }
     }
 }
 

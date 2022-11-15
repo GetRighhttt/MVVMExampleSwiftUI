@@ -15,6 +15,7 @@
 		119A25002923FD4700A9BAAD /* ApiRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A24FF2923FD4700A9BAAD /* ApiRequests.swift */; };
 		119A25032924035F00A9BAAD /* SplashScreenAnim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A25022924035F00A9BAAD /* SplashScreenAnim.swift */; };
 		119A250629241E9B00A9BAAD /* SongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A250529241E9B00A9BAAD /* SongViewModel.swift */; };
+		119A250829242FC800A9BAAD /* ArtWorkLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A250729242FC800A9BAAD /* ArtWorkLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		119A24FF2923FD4700A9BAAD /* ApiRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequests.swift; sourceTree = "<group>"; };
 		119A25022924035F00A9BAAD /* SplashScreenAnim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenAnim.swift; sourceTree = "<group>"; };
 		119A250529241E9B00A9BAAD /* SongViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewModel.swift; sourceTree = "<group>"; };
+		119A250729242FC800A9BAAD /* ArtWorkLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtWorkLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		119A24FC2923FB5E00A9BAAD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				119A250729242FC800A9BAAD /* ArtWorkLoader.swift */,
 				119A24FD2923FB8F00A9BAAD /* DataModels.swift */,
 				119A24FF2923FD4700A9BAAD /* ApiRequests.swift */,
 			);
@@ -175,6 +178,7 @@
 			files = (
 				119A25032924035F00A9BAAD /* SplashScreenAnim.swift in Sources */,
 				119A250629241E9B00A9BAAD /* SongViewModel.swift in Sources */,
+				119A250829242FC800A9BAAD /* ArtWorkLoader.swift in Sources */,
 				119A24FE2923FB8F00A9BAAD /* DataModels.swift in Sources */,
 				119A24EF2923EAD000A9BAAD /* ContentView.swift in Sources */,
 				119A25002923FD4700A9BAAD /* ApiRequests.swift in Sources */,

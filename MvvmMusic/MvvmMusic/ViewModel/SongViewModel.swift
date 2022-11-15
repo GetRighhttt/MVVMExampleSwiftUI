@@ -15,6 +15,7 @@ class SongListViewModel: ObservableObject {
     
     private let dataModel: DataModel = DataModel()
     private var disposables = Set<AnyCancellable>()
+    private let artworkLoader: ArtWorkLoader = ArtWorkLoader()
     
     init() { // observation that updates model list when the search changes.
         $searchTerm
@@ -24,6 +25,7 @@ class SongListViewModel: ObservableObject {
     
     private func loadSongs(searchTerm: String) {
         songs.removeAll()
+        artworkLoader.reset()
         
         dataModel.loadSongs(searchTerm: searchTerm) { songs in
             songs.forEach {
@@ -36,6 +38,12 @@ class SongListViewModel: ObservableObject {
         let songViewModel = SongViewModel(song: song)
         DispatchQueue.main.async {
             self.songs.append(songViewModel)
+        }
+        
+        artworkLoader.loadArtWork(forSong: song) { image in
+            DispatchQueue.main.async {
+                songViewModel.artwork = image
+            }
         }
     }
 }
