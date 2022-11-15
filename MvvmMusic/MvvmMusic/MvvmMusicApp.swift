@@ -11,7 +11,7 @@ import SwiftUI
 struct MvvmMusicApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenAnim()
         }
     }
 }
