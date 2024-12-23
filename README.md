@@ -1,4 +1,4 @@
-# MVVMExampleSwiftUI
+# Music
 Basic MVVM example in Swift.
 
 https://user-images.githubusercontent.com/105057858/202024877-17d6773a-f41b-4e9c-af76-26e6d3d3ce71.mov
